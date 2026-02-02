@@ -1,6 +1,6 @@
 import sqlite3
 import os
-
+#SQLite connection logic
 db_path = os.path.join(os.path.dirname(__file__), "database.db")
 conn = sqlite3.connect(db_path)
 cursor = conn.cursor()
@@ -66,6 +66,7 @@ def create_account():
     conn.commit()
     print("Account created successfully.")
 
+#adding data to table
 def add_workout(username, password):
     print("Add New Workout Best Record")
     workout_name = input("Enter workout name: ").strip()
@@ -85,7 +86,8 @@ def add_workout(username, password):
     cursor.execute("INSERT INTO user_workouts_prs (workout_id, workout_weight, workout_reps, duration_minutes) VALUES (?, ?, ?, ?);", (workout_id,workout_weight, workout_reps, workout_duration))
     conn.commit()
     print("Workout added successfully.")
-
+    
+#viewing data from table
 def view_workouts(username, password):
     fon = cursor.execute("SELECT id FROM users WHERE email = ? AND password = ?", (username, password))
     user_id = fon.fetchone()[0]
@@ -113,7 +115,7 @@ def view_workouts(username, password):
     
 
 
-
+###main logic##
 if __name__ == "__main__":
     opening_statement()
     while True:
@@ -134,7 +136,7 @@ if __name__ == "__main__":
                     break
                 else:
                     print("Invalid option.")
-
+#sign in isnt fully correct yet
         elif choice == '2':
             print("Create New Account selected.")
             if create_account() == True:
@@ -144,4 +146,5 @@ if __name__ == "__main__":
             break
         else:
             print("Invalid choice. Please select a valid option.")
+
 
